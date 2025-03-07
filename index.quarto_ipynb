@@ -1,0 +1,209 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"jaewon-blog\"\n",
+        "listing:\n",
+        "  contents: posts\n",
+        "  sort: \"date desc\"\n",
+        "  type: default\n",
+        "  categories: true\n",
+        "  sort-ui: false\n",
+        "  filter-ui: false\n",
+        "page-layout: full\n",
+        "title-block-banner: true\n",
+        "---\n",
+        "\n",
+        "\n",
+        "\n",
+        "This is a poast with executable "
+      ],
+      "id": "6115b4e6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Palmer Penguins 데이터 분석\"\n",
+        "author: \"3조: 박소은, 박수현, 박재원\"\n",
+        "date: 2025/03/05\n",
+        "format: html\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "# Palmer Penguins 데이터 분석\n",
+        "\n",
+        "Palmer Penguins 데이터셋을 분석하여 **종별 개체수, 서식지 분포, 성비, 주요 신체 특성의 평균값**을 알아보았습니다.\n",
+        "\n",
+        "## 0. 데이터 로드\n",
+        "\n",
+        "palmerpenguins 라이브러리를 이용하여 penguins 데이터를 불러왔습니다.\n",
+        "\n",
+        "약 344개의 펭귄 데이터가 존재합니다.\n",
+        "\n",
+        "```{python}\n",
+        "import pandas as pd\n",
+        "from palmerpenguins import load_penguins\n",
+        "\n",
+        "# 데이터 로드\n",
+        "penguins = load_penguins()\n",
+        "penguins.tail()"
+      ],
+      "id": "2015a943",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 1. 종별 개체수 분석\n",
+        "\n",
+        "### (1) 코드\n"
+      ],
+      "id": "226749d1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "species_info = pd.DataFrame(penguins.groupby(by='species').size().reset_index(name='species_count'))\n",
+        "species_info.style.hide(axis=\"index\")"
+      ],
+      "id": "fd033195",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### (2) 결과\n",
+        "\n",
+        "종별 개체수는 다음과 같습니다.\n",
+        "\n",
+        "-   Adelie: 152마리\n",
+        "\n",
+        "-   Chinstrap: 68마리\n",
+        "\n",
+        "-   Gentoo: 124마리\n",
+        "\n",
+        "## 2. 서식지 분포\n",
+        "\n",
+        "### (1) 코드\n"
+      ],
+      "id": "86c79466"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "island_info = penguins.groupby(by=['species', 'island']).size().reset_index(name='species_island_count')\n",
+        "island_info.style.hide(axis=\"index\")"
+      ],
+      "id": "f811f872",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### (2) 결과\n",
+        "\n",
+        "서식지는 크게 Biscoe, Dream, Torgersen으로 나뉩니다.\n",
+        "\n",
+        "-   Adelie: Biscoe, Dream, Torgersen에 고르게 분포\n",
+        "\n",
+        "-   Chinstrap: 주로 Dream에 분포\n",
+        "\n",
+        "-   Gentoo: 주로 Biscoe에 분포\n",
+        "\n",
+        "## 3. 조사된 펭귄들의 성비 분석\n",
+        "\n",
+        "### (1) 코드\n"
+      ],
+      "id": "499b2050"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sex_info = penguins.groupby(by=['species', 'sex']).size().reset_index(name='species_sex_count')\n",
+        "sex_info.style.hide(axis=\"index\")"
+      ],
+      "id": "2cd46fc0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### (2) 결과\n",
+        "\n",
+        "-   Adelie: female, male 각각 73마리\n",
+        "\n",
+        "-   Chinstrap: female 58마리, male 61마리\n",
+        "\n",
+        "-   Gentoo: female, male 각각 34마리\n",
+        "\n",
+        "## 4. 신체 특성 평균값 분석\n",
+        "\n",
+        "### (1) 코드\n"
+      ],
+      "id": "222abc7a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mean_info = penguins.groupby(by='species').mean(numeric_only=True)\n",
+        "del mean_info['year']\n",
+        "mean_info.style.format(\"{:.2f}\")"
+      ],
+      "id": "bb0c7635",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### (2) 결과\n",
+        "\n",
+        "-   부리의 길이(bill_length): Chinstrap이 가장 길다.\n",
+        "\n",
+        "    -   Chinstrap \\> Gentoo \\> Adelie\n",
+        "\n",
+        "-   부리의 깊이(bill_depth): Chinstrap이 가장 깊다.\n",
+        "\n",
+        "    -   Gentoo \\> Chinstrap \\> Adelie\n",
+        "\n",
+        "-   플리퍼(날개)의 길이(flipper_length): Gentoo가 가장 길다.\n",
+        "\n",
+        "    -   Gentoo \\> Chinstrap \\> Adelie\n",
+        "\n",
+        "-   무게(body_mass): Gentoo가 가장 무겁다.\n",
+        "\n",
+        "    -   Gentoo \\> Chinstrap \\> Adelie\n",
+        "```"
+      ],
+      "id": "5eb525fc"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "C:\\Users\\park\\.conda\\envs\\ls_park\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

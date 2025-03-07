@@ -1,0 +1,12 @@
+{
+  "hash": "f9dc9e2aa38b524f2f657b50095167cc",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"jaewon-blog\"\nlisting:\n  contents: posts\n  sort: \"date desc\"\n  type: default\n  categories: true\n  sort-ui: false\n  filter-ui: false\npage-layout: full\ntitle-block-banner: true\n---\n\n\n\nThis is a poast with executable \n\n::: {#c4399ea5 .cell execution_count=1}\n``` {.python .cell-code}\nimport numpy as np\n\na = np.arange(10)\na\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\narray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
